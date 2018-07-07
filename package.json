@@ -1,0 +1,23 @@
+{
+  "name": "todo-user-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/hengkyawijaya/todo-user-service.git",
+  "author": "Hengky Anang Wijaya <hengky.anang.w@mail.ugm.ac.id>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "prod": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "helmet": "^3.12.1",
+    "mongoose": "^5.2.1",
+    "mongoose-paginate": "^5.0.3",
+    "morgan": "^1.9.0"
+  }
+}

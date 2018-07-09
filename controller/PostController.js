@@ -105,7 +105,7 @@ module.exports = {
     const { id } = req.params;
     const { data:{user} } = data;
 
-    const thePost = await Post.findById({id}).populate([
+    const thePost = await Post.findOne({id}).populate([
       {
         path: 'user'
       }
@@ -120,7 +120,8 @@ module.exports = {
     }
 
     try {
-      const deletePost = await Post.remove({ id });
+      
+      await thePost.remove();
 
       res.send({
         status: {

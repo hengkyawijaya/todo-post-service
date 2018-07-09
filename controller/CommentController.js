@@ -106,7 +106,7 @@ module.exports = {
 
     try {
 
-      const theComment = await Post.findById({id}).populate([
+      const theComment = await Post.findOne({id}).populate([
         {
           path: 'user'
         }
@@ -120,7 +120,7 @@ module.exports = {
         })
       }
 
-      const deleteComment = await Comment.remove({ id });
+      await theComment.remove();
 
       res.send({
         status: {

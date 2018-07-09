@@ -72,17 +72,11 @@ module.exports = {
     const { comment } = req.body;
     const { data:{user} } = data;
 
-    const theComment = await Post.findById({id}).populate([
-      {
-        path: 'user'
-      }
-    ]);
+    const theComment = await Comment.findOne({ $and: [{ _id: id }, { user: user._id }  ] });
 
-    if(user._id !== theComment.user._id){
+    if(!theComment){
       return next({
-        error: {
           message: "Unauthorized"
-        }
       })
     }
 
@@ -106,19 +100,13 @@ module.exports = {
 
     try {
 
-      const theComment = await Post.findOne({id}).populate([
-        {
-          path: 'user'
-        }
-      ]);
-  
-      if(user._id !== theComment.user._id){
-        return next({
-          error: {
-            message: "Unauthorized"
-          }
-        })
-      }
+      const theComment = await Comment.findOne({ $and: [{ _id: id }, { user: user._id }  ] });
+
+    if(!theComment){
+      return next({
+          message: "Unauthorized"
+      })
+    }
 
       await theComment.remove();
 

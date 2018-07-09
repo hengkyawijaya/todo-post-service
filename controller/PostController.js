@@ -73,17 +73,11 @@ module.exports = {
     const { post } = req.body;
     const { data:{user} } = data;
 
-    const thePost = await Post.findById({id}).populate([
-      {
-        path: 'user'
-      }
-    ]);
+    const thePost = await Post.findOne({ $and: [{ _id: id }, { user: user._id }  ] });
 
-    if(user._id !== thePost.user._id){
+    if(!thePost){
       return next({
-        error: {
           message: "Unauthorized"
-        }
       })
     }
 
@@ -105,17 +99,12 @@ module.exports = {
     const { id } = req.params;
     const { data:{user} } = data;
 
-    const thePost = await Post.findOne({id}).populate([
-      {
-        path: 'user'
-      }
-    ]);
+    const thePost = await Post.findOne({ $and: [{ _id: id }, { user: user._id }  ] });
     
-    if(user._id !== thePost.user._id){
+
+    if(!thePost){
       return next({
-        error: {
           message: "Unauthorized"
-        }
       })
     }
 

@@ -81,7 +81,7 @@ module.exports = {
     }
 
     try {
-      const editComment = await Comment.findByIdAndUpdate({ id }, comment);
+      const editComment = await Comment.findByIdAndUpdate(id, comment);
 
       res.send({
         status: {

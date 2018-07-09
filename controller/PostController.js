@@ -82,7 +82,7 @@ module.exports = {
     }
 
     try {
-      const editPost = await Post.findByIdAndUpdate({ id }, post);
+      const editPost = await Post.findByIdAndUpdate(id, post);
 
       res.send({
         status: {

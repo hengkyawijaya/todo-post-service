@@ -2,9 +2,11 @@ const { Comment } = require("../model")
 
 module.exports = {
    find: async(data, req, res, next) => {
-    const { page=1, limit=10, searchBy='type', search='', orderBy='updatedAt', order='desc', filter  } = req.query;
+    const { page=1, limit=10, searchBy='type', search='', orderBy='updatedAt', order='desc', filter=false  } = req.query;
+    const theFilter = filter ? JSON.parse(filter) : {}
+
     try {
-      const theComment = await Comment.paginate({...filter}, { page, limit, populate:[{
+      const theComment = await Comment.paginate({...theFilter}, { page, limit, populate:[{
         path:"user"
       }]});
 
@@ -106,7 +108,7 @@ module.exports = {
         }
       })
     }
-    
+
     try {
       const theComment = await Comment.remove({ id });
 

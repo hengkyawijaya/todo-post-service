@@ -87,12 +87,9 @@ module.exports = {
     }
 
     try {
-      const theComment = await Comment.findByIdAndUpdate({ id }, comment);
+      const editComment = await Comment.findByIdAndUpdate({ id }, comment);
 
       res.send({
-        data: {
-          comment: theComment,
-        },
         status: {
           code: 200,
           message: "Operation handle correctly",
@@ -108,7 +105,7 @@ module.exports = {
     const { data:{user} } = data;
 
     try {
-      
+
       const theComment = await Post.findById({id}).populate([
         {
           path: 'user'
@@ -123,11 +120,9 @@ module.exports = {
         })
       }
 
-      const theComment = await Comment.remove({ id });
+      const deleteComment = await Comment.remove({ id });
 
       res.send({
-        data: {
-        },
         status: {
           code: 200,
           message: "Operation handle correctly",

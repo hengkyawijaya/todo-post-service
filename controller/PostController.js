@@ -73,8 +73,14 @@ module.exports = {
     const { post } = req.body;
     const { data:{user} } = data;
 
-    if(user.id !== post.user.id){
-      next({
+    const thePost = await Post.findById({id}).populate([
+      {
+        path: 'user'
+      }
+    ]);
+
+    if(user._id !== thePost.user._id){
+      return next({
         error: {
           message: "Unauthorized"
         }
@@ -82,12 +88,9 @@ module.exports = {
     }
 
     try {
-      const thePost = await Post.findByIdAndUpdate({ id }, post);
+      const editPost = await Post.findByIdAndUpdate({ id }, post);
 
       res.send({
-        data: {
-          post: thePost,
-        },
         status: {
           code: 200,
           message: "Operation handle correctly",
@@ -101,9 +104,15 @@ module.exports = {
   destroy: async (data, req, res, next) =>{
     const { id } = req.params;
     const { data:{user} } = data;
+
+    const thePost = await Post.findById({id}).populate([
+      {
+        path: 'user'
+      }
+    ]);
     
-    if(user.id !== post.user.id){
-      next({
+    if(user._id !== thePost.user._id){
+      return next({
         error: {
           message: "Unauthorized"
         }
@@ -111,11 +120,9 @@ module.exports = {
     }
 
     try {
-      const thePost = await Post.remove({ id });
+      const deletePost = await Post.remove({ id });
 
       res.send({
-        data: {
-        },
         status: {
           code: 200,
           message: "Operation handle correctly",

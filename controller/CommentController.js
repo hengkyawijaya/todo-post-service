@@ -72,8 +72,14 @@ module.exports = {
     const { comment } = req.body;
     const { data:{user} } = data;
 
-    if(user.id !== comment.user.id){
-      next({
+    const theComment = await Post.findById({id}).populate([
+      {
+        path: 'user'
+      }
+    ]);
+
+    if(user._id !== theComment.user._id){
+      return next({
         error: {
           message: "Unauthorized"
         }
@@ -101,15 +107,22 @@ module.exports = {
     const { id } = req.params;
     const { data:{user} } = data;
 
-    if(user.id !== comment.user.id){
-      next({
-        error: {
-          message: "Unauthorized"
-        }
-      })
-    }
-
     try {
+      
+      const theComment = await Post.findById({id}).populate([
+        {
+          path: 'user'
+        }
+      ]);
+  
+      if(user._id !== theComment.user._id){
+        return next({
+          error: {
+            message: "Unauthorized"
+          }
+        })
+      }
+
       const theComment = await Comment.remove({ id });
 
       res.send({

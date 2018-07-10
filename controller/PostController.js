@@ -2,11 +2,11 @@ const { Post } = require("../model")
 
 module.exports = {
    find: async(data, req, res, next) => {
-    const { page=1, limit=10, searchBy='type', search='', orderBy='updatedAt', order='desc', filter=false  } = req.query;
+    const { page=1, limit=10, searchBy='type', search='', orderBy='createdAt', order='desc', filter=false  } = req.query;
     const theFilter = filter ? JSON.parse(filter) : {}
 
     try {
-      const thePost = await Post.paginate({...theFilter}, { page, limit, 
+      const thePost = await Post.paginate({...theFilter}, { sort:[{ [orderBy]: order  }], page, limit, 
           populate:[{
           path: "user"
         }]

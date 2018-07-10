@@ -6,7 +6,7 @@ module.exports = {
     const theFilter = filter ? JSON.parse(filter) : {}
 
     try {
-      const thePost = await Post.paginate({...theFilter}, { sort:[{ [orderBy]: order  }], page, limit, 
+      const thePost = await Post.paginate({...theFilter}, { sort:{ [orderBy]: order  }, page, limit, 
           populate:[{
           path: "user"
         }]
